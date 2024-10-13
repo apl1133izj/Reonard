@@ -13,14 +13,14 @@ public class Archer : MonoBehaviour
     public Image hpImage;
     public GameObject reSearchTagGameObject;
 
-    public float moveSpeed;//ÇÃ·¹ÀÌ¾î ½ºÇÇÆ®
-    public float checkRadius = 1.0f; // È®ÀÎÇÒ ¹İ°æ
-    public bool goblinActionsBool;//³ª¹«¿¡ ´Ù¸¥ °íºí¸°ÀÌ ÀÖ´ÂÁö 
-    public bool treeHitBool;//³ª¹«¸¦ º£°í ÀÖ´ÂÁö
-    public string tagName;//°íºí¸°ÀÌ Ã£´Â tag
-    public string houseName;//°íºí¸°ÀÌ ÀÏÀ» ´ÙÇÑ ÈÄ Ã£´Â Áı ÀÌ¸§ 
-    public bool goblinFound;//ÀÏ ÇÒ °Å¸®¸¦ Ã£¾Ò´Â°¡
-    public bool goHouseBool;//ÁıÀ¸·Î µ¹¾Æ°¡´Â ÁßÀÎ°¡
+    public float moveSpeed;//í”Œë ˆì´ì–´ ìŠ¤í”¼íŠ¸
+    public float checkRadius = 1.0f; // í™•ì¸í•  ë°˜ê²½
+    public bool goblinActionsBool;//ë‚˜ë¬´ì— ë‹¤ë¥¸ ê³ ë¸”ë¦°ì´ ìˆëŠ”ì§€ 
+    public bool treeHitBool;//ë‚˜ë¬´ë¥¼ ë² ê³  ìˆëŠ”ì§€
+    public string tagName;//ê³ ë¸”ë¦°ì´ ì°¾ëŠ” tag
+    public string houseName;//ê³ ë¸”ë¦°ì´ ì¼ì„ ë‹¤í•œ í›„ ì°¾ëŠ” ì§‘ ì´ë¦„ 
+    public bool goblinFound;//ì¼ í•  ê±°ë¦¬ë¥¼ ì°¾ì•˜ëŠ”ê°€
+    public bool goHouseBool;//ì§‘ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ì¤‘ì¸ê°€
     private Vector2 previousPosition;
 
     float stopPosX;
@@ -44,18 +44,18 @@ public class Archer : MonoBehaviour
     public bool bridgeFalse;
     public bool archerActionsBool;
 
-    //ºÎµúÈù Äİ¶óÀÌ´õ Å©±â 
+    //ë¶€ë”ªíŒ ì½œë¼ì´ë” í¬ê¸° 
     float colliderWidth;
     float colliderHeight;
 
-    public bool avoidingBool;//´Ù¸¥ °Ç¹°°ú ºÎµúÄ¡´ÂÁö È®ÀÎ
-    public bool avoidingSaveBool;//´Ù¸¥ °Ç¹°°ú ºÎµúÄ¡´ÂÁö È®ÀÎ
+    public bool avoidingBool;//ë‹¤ë¥¸ ê±´ë¬¼ê³¼ ë¶€ë”ªì¹˜ëŠ”ì§€ í™•ì¸
+    public bool avoidingSaveBool;//ë‹¤ë¥¸ ê±´ë¬¼ê³¼ ë¶€ë”ªì¹˜ëŠ”ì§€ í™•ì¸
 
     public bool up;
     public bool down;
 
     public bool isGround;
-    //È¿°úÀ½
+    //íš¨ê³¼ìŒ
     public AudioSource bowSound;
     private void Awake()
     {
@@ -115,23 +115,23 @@ public class Archer : MonoBehaviour
     }
     void ArcherFlip()
     {
-        // ÇöÀç À§Ä¡¿Í ÀÌÀü À§Ä¡¸¦ ºñ±³ÇÏ¿© ¹æÇâÀÌ ¹Ù²î´ÂÁö È®ÀÎ
+        // í˜„ì¬ ìœ„ì¹˜ì™€ ì´ì „ ìœ„ì¹˜ë¥¼ ë¹„êµí•˜ì—¬ ë°©í–¥ì´ ë°”ë€ŒëŠ”ì§€ í™•ì¸
         if (transform.position.x > previousPosition.x)
         {
-            // ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ Áß
+            // ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™ ì¤‘
             transform.localScale = new Vector2(1, 1);
             right = true;
             left = false;
         }
         else if (transform.position.x < previousPosition.x)
         {
-            // ¿ŞÂÊÀ¸·Î ÀÌµ¿ Áß
+            // ì™¼ìª½ìœ¼ë¡œ ì´ë™ ì¤‘
             transform.localScale = new Vector2(-1, 1);
             right = false;
             left = true;
         }
 
-        // ÇöÀç À§Ä¡¸¦ ÀÌÀü À§Ä¡·Î ¾÷µ¥ÀÌÆ®
+        // í˜„ì¬ ìœ„ì¹˜ë¥¼ ì´ì „ ìœ„ì¹˜ë¡œ ì—…ë°ì´íŠ¸
         previousPosition = transform.position;
     }
     public void HP()
@@ -152,7 +152,7 @@ public class Archer : MonoBehaviour
     }
     void Avoiding()
     {
-        //Äİ¶óÀÌ´õÀÇ Å©±â¸¦ È®ÀÎÇØ¼­ ÇÇÇÏ´Â ÄÚµå
+        //ì½œë¼ì´ë”ì˜ í¬ê¸°ë¥¼ í™•ì¸í•´ì„œ í”¼í•˜ëŠ” ì½”ë“œ
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
         foreach (Collider2D collider in colliders)
         {
@@ -184,7 +184,7 @@ public class Archer : MonoBehaviour
                 colliderWidth = width;
                 colliderHeight = height;
                 avoidingBool = true;
-                avoidingSaveBool = avoidingBool; // ÄÚ·çÆ¾ ½ÇÇà ÇÃ·¡±× ¼³Á¤
+                avoidingSaveBool = avoidingBool; // ì½”ë£¨í‹´ ì‹¤í–‰ í”Œë˜ê·¸ ì„¤ì •
             }
         }
     }
@@ -215,95 +215,96 @@ public class Archer : MonoBehaviour
             }
         }
 
-        avoidingBool = false; // ÀÌµ¿ Á¾·á ÈÄ avoidingBoolÀ» false·Î ¼³Á¤
-        avoidingSaveBool = false; // ÄÚ·çÆ¾ ½ÇÇà ÇÃ·¡±× ÇØÁ¦
+        avoidingBool = false; // ì´ë™ ì¢…ë£Œ í›„ avoidingBoolì„ falseë¡œ ì„¤ì •
+        avoidingSaveBool = false; // ì½”ë£¨í‹´ ì‹¤í–‰ í”Œë˜ê·¸ í•´ì œ
     }
     public void ArcherAction()
-    {
-        // ¸ğµç ³ª¹« ¿ÀºêÁ§Æ®¸¦ Ã£±â
-        GameObject[] warkerActionGameObject = GameObject.FindGameObjectsWithTag(tagName);
-        if (warkerActionGameObject.Length > 0 )
-        {
-            GameObject closestGoblin = null;
-            float closestDistance = Mathf.Infinity;
+{
+    // 'tagName'ì— í•´ë‹¹í•˜ëŠ” ëª¨ë“  ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ ë°°ì—´ì— ì €ì¥
+    GameObject[] ArcherActionGameObject = GameObject.FindGameObjectsWithTag(tagName);
 
-            // ¸ğµç ³ª¹«¿¡ ´ëÇØ °Å¸®¸¦ °è»êÇÏ°í °¡Àå °¡±î¿î ³ª¹« Ã£±â
-            foreach (GameObject warkerActions in warkerActionGameObject)
+    // ì°¾ì€ ì˜¤ë¸Œì íŠ¸ê°€ ìˆì„ ê²½ìš°ì—ë§Œ ì•„ë˜ ë¡œì§ ìˆ˜í–‰
+    if (ArcherActionGameObject.Length > 0)
+    {
+        GameObject closestGoblin = null; // ê°€ì¥ ê°€ê¹Œìš´ ê³ ë¸”ë¦°ì„ ì €ì¥í•  ë³€ìˆ˜
+        float closestDistance = Mathf.Infinity; // ì´ˆê¸°í™”ëœ ê°€ì¥ ê°€ê¹Œìš´ ê±°ë¦¬ ë³€ìˆ˜
+
+        // ì°¾ì€ ì˜¤ë¸Œì íŠ¸ ì¤‘ì—ì„œ ê°€ì¥ ê°€ê¹Œìš´ ê³ ë¸”ë¦°ì„ íƒìƒ‰
+        foreach (GameObject archerActions in ArcherActionGameObject)
+        {
+            // í˜„ì¬ ìœ„ì¹˜ì™€ ê° ì˜¤ë¸Œì íŠ¸ ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°
+            float distanceToTree = Vector2.Distance(transform.position, new Vector2(archerActions.transform.position.x + stopPosX, archerActions.transform.position.y + stopPosy));
+
+            // ê°€ì¥ ê°€ê¹Œìš´ ì˜¤ë¸Œì íŠ¸ë¥¼ ì—…ë°ì´íŠ¸
+            if (distanceToTree <= closestDistance)
             {
-                float distanceToTree = Vector2.Distance(transform.position, new Vector2(warkerActions.transform.position.x + stopPosX, warkerActions.transform.position.y + stopPosy));
-                //Debug.Log(distanceToTree);
-                if (distanceToTree <= closestDistance)
+                // ê³µê²©ì— ì‚¬ìš©ë˜ëŠ” í™”ì‚´ ì˜¤ë¸Œì íŠ¸ì˜ íƒœê·¸ ì„¤ì •
+                attackPrefab.gameObject.GetComponent<Arrow>().tagName = tagName;
+                closestGoblin = archerActions; // ê°€ì¥ ê°€ê¹Œìš´ ê³ ë¸”ë¦° ì €ì¥
+                closestDistance = distanceToTree; // ê°€ì¥ ê°€ê¹Œìš´ ê±°ë¦¬ ê°±ì‹ 
+            }
+        }
+
+        // ê°€ì¥ ê°€ê¹Œìš´ ê³ ë¸”ë¦°ì´ ìˆì„ ê²½ìš°
+        if (closestGoblin != null)
+        {
+            reSearchTagGameObject.SetActive(false); // ì¬íƒìƒ‰ UI ë¹„í™œì„±í™”
+
+            // ì•„ì§ ê³µê²© ìƒíƒœê°€ ì•„ë‹ˆë©´
+            if (!archerActionsBool)
+            {
+                // ê³µê²© ë²”ìœ„ ë‚´ì— ë“¤ì–´ì˜¤ì§€ ì•Šì•˜ì„ ë•Œ
+                if (!attackRangeBool)
                 {
-                    attackPrefab.gameObject.GetComponent<Arrow>().tagName = tagName;
-                    // ÇöÀç ³ª¹«°¡ ´õ °¡±î¿ì¸é ¾÷µ¥ÀÌÆ®
-                    closestGoblin = warkerActions;
-                    closestDistance = distanceToTree;
+                    archerAnimator.SetBool("AttackBool", false); // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì¤‘ì§€
+                    archerAnimator.SetBool("RunBool", true); // ë‹¬ë¦¬ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘
+
+                    // ê³ ë¸”ë¦°ì˜ ìœ„ì¹˜ë¡œ ì´ë™
+                    Vector2 targetPosition = new Vector2(closestGoblin.transform.position.x + stopPosX, closestGoblin.transform.position.y + stopPosy);
+                    MoveToTargetPosition(targetPosition); // í•´ë‹¹ ì¢Œí‘œë¡œ ì´ë™í•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
                 }
             }
 
-            if (closestGoblin != null)
+            // ê³µê²© ë²”ìœ„ ë‚´ì— ê³ ë¸”ë¦°ì´ ìˆì„ ê²½ìš°
+            if (closestDistance <= attackRange)
             {
-
-                reSearchTagGameObject.SetActive(false);
-                // °¡Àå °¡±î¿î ÀÎ°£¿¡ ´ëÇÑ Ã³¸® ¼öÇà
-                if (!archerActionsBool)
-                {
-
-                    if (!attackRangeBool)
-                    {
-
-                        archerAnimator.SetBool("AttackBool", false);
-                        archerAnimator.SetBool("RunBool", true);
-                        Vector2 targetPosition = new Vector2(closestGoblin.transform.position.x + stopPosX, closestGoblin.transform.position.y + stopPosy);
-                        MoveToTargetPosition(targetPosition);
-                    }
-                }
-                if (closestDistance <= attackRange)
-                {
-
-                    //"°ø°İ ÇÏ´ÂÁß"
-                    archerActionsBool = true;
-                    archerAnimator.SetBool("RunBool", false);
-
-                    
-                    archerAnimator.SetBool("AttackBool", true);
-
-                }
-                else
-                {
-
-                    archerActionsBool = false;
-                    archerAnimator.SetBool("RunBool", true);
-                }
+                // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘
+                archerActionsBool = true;
+                archerAnimator.SetBool("RunBool", false); // ë‹¬ë¦¬ê¸° ì¤‘ì§€
+                archerAnimator.SetBool("AttackBool", true); // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
             }
             else
             {
-                reSearchTagGameObject.SetActive(true);
-                // È¥ÀÚ ÀÖÀ» ¶§ÀÇ Ã³¸®
+                // ê³µê²© ë²”ìœ„ ë°–ì´ë©´ ë‹¬ë¦¬ê¸° ìƒíƒœ ìœ ì§€
                 archerActionsBool = false;
-
+                archerAnimator.SetBool("RunBool", true); // ë‹¬ë¦¬ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
             }
         }
         else
         {
-            //reSearchTagGameObject.SetActive(true);
-            // È¥ÀÚ ÀÖÀ» ¶§ÀÇ Ã³¸®
-            archerActionsBool = false;
-            archerAnimator.SetBool("AttackBool", false);
-            archerAnimator.SetBool("RunBool", true);
-            tagName = "Goblin Archer";
-            /*¿ø·¡ Å¸°ÙÀÌ¾ú´ø °ÔÀÓ¿ÀºêÁ§Æ®°¡ ¾ø¾îÁú°æ¿ì ÀçÅ½»ö ÇÏÁö¸¸ ÀçÅ½»öÀ»
-            ÇØµµ °íºí¸° °ÔÀÓ¿ÀºêÁ§Æ® °¡ ¾øÀ»°æ¿ì GoHouse½ÇÇà*/
-
-            if (!searchBool)
-            {
-                reSearchTagGameObject.SetActive(false);
-                GoHouse(); // ÁıÀ¸·Î µ¹¾Æ°¡´Â ·ÎÁ÷ ¼öÇà
-                goblinSpacing = 1.5f;
-            }
-            //¸ğµç Á¶°ÇÀÌ ¾Æ´Ò °æ¿ì
+            // ê³ ë¸”ë¦°ì´ ì—†ì„ ê²½ìš° ì¬íƒìƒ‰ì„ ìœ„í•œ UI í™œì„±í™”
+            reSearchTagGameObject.SetActive(true);
+            archerActionsBool = false; // ê³µê²© ìƒíƒœ í•´ì œ
         }
     }
+    else
+    {
+        // ê³ ë¸”ë¦°ì´ ì—†ì„ ë•Œ ì¬íƒìƒ‰ì„ ìˆ˜í–‰í•˜ì§€ ì•Šê³  í˜¼ì ìˆì„ ë•Œì˜ ì²˜ë¦¬
+        archerActionsBool = false; // ê³µê²© ìƒíƒœ í•´ì œ
+        archerAnimator.SetBool("AttackBool", false); // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì¤‘ì§€
+        archerAnimator.SetBool("RunBool", true); // ë‹¬ë¦¬ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+        tagName = "Goblin Archer"; // ìƒˆë¡œìš´ íƒ€ê²Ÿ íƒœê·¸ ì„¤ì •
+
+        // ì¬íƒìƒ‰ì´ í•„ìš”í•˜ì§€ ì•Šì„ ë•Œ ì§‘ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ë¡œì§ ìˆ˜í–‰
+        if (searchBool == false)
+        {
+            reSearchTagGameObject.SetActive(false); // ì¬íƒìƒ‰ UI ë¹„í™œì„±í™”
+            GoHouse(); // ì§‘ìœ¼ë¡œ ëŒì•„ê°€ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
+            goblinSpacing = 1.5f; // ê³ ë¸”ë¦°ê³¼ì˜ ê°„ê²© ì„¤ì •
+        }
+    }
+}
+
 
     private void MoveToTargetPosition(Vector2 targetPosition)
     {
@@ -336,7 +337,7 @@ public class Archer : MonoBehaviour
                 goHouseBool = true;
                 archerAnimator.SetBool("RunBool", true);
                 Vector2 targetPosition = warriorhouse.transform.position;
-                targetPosition = FindNonOverlappingPosition(targetPosition); // °£°İ Á¶Á¤
+                targetPosition = FindNonOverlappingPosition(targetPosition); // ê°„ê²© ì¡°ì •
                 transform.position = Vector2.MoveTowards(transform.position, warriorhouse.transform.position, moveSpeed * Time.deltaTime);
                 if (Vector2.Distance(transform.position, targetPosition) < 2f)
                 {
@@ -348,7 +349,7 @@ public class Archer : MonoBehaviour
         }
     }
 
-    public void Attack()//¾Ê¾¸
+    public void Attack()//ì•Šì”€
     {
 
         // Rigidbody2D throwPrefabRigidbody = ThrowPrefab.GetComponent<Rigidbody2D>();
