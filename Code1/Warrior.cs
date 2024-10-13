@@ -183,84 +183,89 @@ public class Warrior : MonoBehaviour
         
     }
     public void WarriorAction()
+{
+    // 'tagName'에 해당하는 모든 오브젝트를 찾아 배열에 저장
+    GameObject[] warriorActionGameObject = GameObject.FindGameObjectsWithTag(tagName);
+
+    // 찾은 오브젝트가 있을 경우에만 아래 로직 수행
+    if (warriorActionGameObject.Length > 0)
     {
-        // 모든 나무 오브젝트를 찾기
-        GameObject[] warkerActionGameObject = GameObject.FindGameObjectsWithTag(tagName);
-        if (warkerActionGameObject.Length > 0)
+        GameObject closestGoblin = null; // 가장 가까운 고블린을 저장할 변수
+        float closestDistance = Mathf.Infinity; // 초기화된 가장 가까운 거리 변수
+
+        // 찾은 오브젝트 중에서 가장 가까운 고블린을 탐색
+        foreach (GameObject warriorActions in warriorActionGameObject)
         {
-            GameObject closestGoblin = null;
-            float closestDistance = Mathf.Infinity;
-            // 모든 나무에 대해 거리를 계산하고 가장 가까운 나무 찾기
-            foreach (GameObject warkerActions in warkerActionGameObject)
+            // 현재 위치와 각 오브젝트 사이의 거리를 계산
+            float distanceToTree = Vector2.Distance(transform.position, new Vector2(warriorActions.transform.position.x + stopPosX, warriorActions.transform.position.y + stopPosy));
+
+            // 가장 가까운 오브젝트를 업데이트
+            if (distanceToTree <= closestDistance)
             {
-                float distanceToTree = Vector2.Distance(transform.position, new Vector2(warkerActions.transform.position.x + stopPosX, warkerActions.transform.position.y + stopPosy));
-                //Debug.Log(distanceToTree);
-                if (distanceToTree <= closestDistance)
+                // 가장 가까운 고블린을 저장
+                closestGoblin = warriorActions;
+                closestDistance = distanceToTree; // 가장 가까운 거리 갱신
+            }
+        }
+
+        // 가장 가까운 고블린이 있을 경우
+        if (closestGoblin != null)
+        {
+            reSearchTagGameObject.SetActive(false); // 재탐색 UI 비활성화
+
+            // 아직 공격 상태가 아니면
+            if (!warriorActionsBool)
+            {
+                // 공격 범위에 도달하지 않았을 때
+                if (!attackRangeBool)
                 {
-          
-                    // 현재 나무가 더 가까우면 업데이트
-                    closestGoblin = warkerActions;
-                    closestDistance = distanceToTree;
+                    warriorAnimator.SetBool("AttackBool", false); // 공격 애니메이션 중지
+                    warriorAnimator.SetBool("RunBool", true); // 달리기 애니메이션 실행
+
+                    // 고블린의 위치로 이동
+                    Vector2 targetPosition = new Vector2(closestGoblin.transform.position.x + stopPosX, closestGoblin.transform.position.y + stopPosy);
+                    transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime); // 해당 위치로 이동
+                    WakerFlip(targetPosition); // 방향 전환 함수 호출
                 }
             }
 
-            if (closestGoblin != null)
+            // 공격 범위 내에 고블린이 있을 경우
+            if (closestDistance <= attackRange)
             {
-                reSearchTagGameObject.SetActive(false);
-                // 가장 가까운 인간에 대한 처리 수행
-                if (!warriorActionsBool)
-                {
-                    if (!attackRangeBool)
-                    {
-                        warriorAnimator.SetBool("AttackBool", false);
-                        warriorAnimator.SetBool("RunBool", true);
-                        
-                        Vector2 targetPosition = new Vector2(closestGoblin.transform.position.x + stopPosX, closestGoblin.transform.position.y + stopPosy);
-                        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                        WakerFlip(targetPosition);
-
-                    }
-                }
-                if (closestDistance <= attackRange)
-                {
-                    //"공격 하는중"
-                    warriorActionsBool = true;
-                    warriorAnimator.SetBool("RunBool", false);
-                    warriorAnimator.SetBool("AttackBool", true);
-                }
-                else
-                {
-                    warriorActionsBool = false;
-                    warriorAnimator.SetBool("RunBool", true);
-                }
+                warriorActionsBool = true; // 공격 상태 활성화
+                warriorAnimator.SetBool("RunBool", false); // 달리기 애니메이션 중지
+                warriorAnimator.SetBool("AttackBool", true); // 공격 애니메이션 실행
             }
             else
             {
-
-                reSearchTagGameObject.SetActive(true);
-                // 혼자 있을 때의 처리
+                // 공격 범위 밖이면 달리기 상태 유지
                 warriorActionsBool = false;
-
+                warriorAnimator.SetBool("RunBool", true); // 달리기 애니메이션 실행
             }
         }
         else
         {
-            //reSearchTagGameObject.SetActive(true);
-            // 혼자 있을 때의 처리
-            warriorActionsBool = false;
-            warriorAnimator.SetBool("AttackBool", false);
-            warriorAnimator.SetBool("RunBool", true);
-            /*원래 타겟이었던 게임오브젝트가 없어질경우 재탐색 하지만 재탐색을
-            해도 고블린 게임오브젝트 가 없을경우 GoHouse실행*/
-            tagName = "Goblin Archer";
-            if (searchBool == false)
-            {
-                reSearchTagGameObject.SetActive(false);
-                GoHouse(); // 집으로 돌아가는 로직 수행
-            }
-            //모든 조건이 아닐 경우
+            // 고블린이 없을 경우 재탐색을 위한 UI 활성화
+            reSearchTagGameObject.SetActive(true);
+            warriorActionsBool = false; // 공격 상태 해제
         }
     }
+    else
+    {
+        // 고블린이 없을 때 재탐색을 수행하지 않고 혼자 있을 때의 처리
+        warriorActionsBool = false; // 공격 상태 해제
+        warriorAnimator.SetBool("AttackBool", false); // 공격 애니메이션 중지
+        warriorAnimator.SetBool("RunBool", true); // 달리기 애니메이션 실행
+        tagName = "Goblin Archer"; // 새로운 타겟 태그 설정
+
+        // 재탐색이 필요하지 않을 때 집으로 돌아가는 로직 수행
+        if (searchBool == false)
+        {
+            reSearchTagGameObject.SetActive(false); // 재탐색 UI 비활성화
+            GoHouse(); // 집으로 돌아가는 함수 호출
+        }
+    }
+}
     public void GoHouse()
     {
         Tower[] warriorhouses = FindObjectsOfType<Tower>();
