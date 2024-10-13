@@ -15,15 +15,14 @@ public class Warrior : MonoBehaviour
     public GameObject reSearchTagGameObject;
     Rigidbody2D rigidbody2;
 
-    public float moveSpeed;//�÷��̾� ����Ʈ
-    public float checkRadius = 1.0f; // Ȯ���� �ݰ�
-    public bool warriorActionsBool;//������ �ٸ� ��Ŀ�� �ִ��� 
-    public float warkTime;
-    public string tagName;//��Ŀ�� ã�� tag
-    public string houseName;//��Ŀ�� ���� ���� �� ã�� �� �̸� 
-    public bool warkerFound;//�� �� �Ÿ��� ã�Ҵ°�
-    public bool goHouseBool;//������ ���ư��� ���ΰ�
-    public bool mineBool; //���꿡 �����ߴ°�
+    public float moveSpeed;//플레이어 스피트
+    public float checkRadius = 1.0f; // 확인할 반경
+    public bool goblinActionsBool;//나무에 다른 고블린이 있는지 
+    public bool treeHitBool;//나무를 베고 있는지
+    public string tagName;//고블린이 찾는 tag
+    public string houseName;//고블린이 일을 다한 후 찾는 집 이름 
+    public bool goblinFound;//일 할 거리를 찾았는가
+    public bool goHouseBool;//집으로 돌아가는 중인가
     public bool mineWarkeEnd;
 
     float stopPosX;
