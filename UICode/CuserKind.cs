@@ -11,13 +11,13 @@ public class CuserKind : MonoBehaviour
     public float mouseYPos;
     ChageMap chageMap;
 
-    public GameObject sheepslaughterGameObject;//�絵��
+    public GameObject sheepslaughterGameObject;//占썹도占쏙옙
     public bool historicalTextGameObjectBool;
     public GameObject historicalTextGameObject;
     public bool[] cuserKind;
     public bool[] variousKind;
-    public GameObject xp;//xp������ ������ �Դ� ȿ�� ����
-    public GameObject[] various;//����,��,���?���?�Դ� ȿ�� ����
+    public GameObject xp;//xp占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쌉댐옙 효占쏙옙 占쏙옙占쏙옙
+    public GameObject[] various;//占쏙옙占쏙옙,占쏙옙,占쏙옙占?占쏙옙占?占쌉댐옙 효占쏙옙 占쏙옙占쏙옙
     public TextMeshProUGUI sheepSlaughterText;
 
     public Castle1 castle1;
@@ -169,6 +169,7 @@ public class CuserKind : MonoBehaviour
                 // gameManager.foodCount += gameManager.foodeCountRandom;
             }
         }
+        //건물이 지어질수 있는 땅인지 확인
         if (collision.gameObject.layer == 11 && bMTouch.buildStart)
         {
             BuildCuser = true;
