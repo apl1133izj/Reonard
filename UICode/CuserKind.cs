@@ -181,61 +181,63 @@ public class CuserKind : MonoBehaviour
             bMTouch.buildGread = false;
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (Input.GetMouseButton(0))
-        {
-            if (collision.gameObject.CompareTag("Sheep") && bMTouch.buildKind == buildeMouseAndTouch.BuildKind.Feed)
-            {
-                Sheep sheep = collision.gameObject.GetComponent<Sheep>();
-                if (gameManager.pempkinCount > 0)
-                {
-                    Debug.Log("pempkinCount--");
-                    cuserKind[3] = true;
-                    gameManager.pempkinCount--;
-                    sheep.hungerGauge.fillAmount += 0.4f;
-                    if (castle1 != null)
-                    {
-                        if (castle1.playerenum == Castle1.Players.player1)
-                        {
-                            Multimanager.attackCoins += 25;
-                        }
-                    }
-                    if (castle2 != null)
-                    {
-                        if (castle2.playerenum == Castle2.Players.player2)
-                        {
-                            Multimanager1.attackCoins += 25;
-                        }
-                    }
-                }
-                bMTouch.buildKind = buildeMouseAndTouch.BuildKind.Null;
-            }
-            if (collision.gameObject.CompareTag("Sheep") && bMTouch.buildKind == buildeMouseAndTouch.BuildKind.Slaughter)
-            {
-                Sheep sheep = collision.gameObject.GetComponent<Sheep>();
-                if (sheep.sheepOld)
-                {
-                    GameObject insFood = Instantiate(sheepslaughterGameObject, transform.position, Quaternion.identity);
-                    if (castle1 != null)
-                    {
-                        if (castle1.playerenum == Castle1.Players.player1)
-                        {
-                            Multimanager.attackCoins += 25;
-                        }
-                    }
-                    if (castle2 != null)
-                    {
-                        if (castle2.playerenum == Castle2.Players.player2)
-                        {
-                            Multimanager1.attackCoins += 25;
-                        }
-                    }
-                    Destroy(collision.gameObject);
-                    cuserKind[4] = true;
-                    bMTouch.buildKind = buildeMouseAndTouch.BuildKind.Null;
-                }
-            }
-        }
-    }
+ private void OnTriggerStay2D(Collider2D collision)
+ {
+     if (Input.GetMouseButton(0))
+     {
+         //먹이주기
+         if (collision.gameObject.CompareTag("Sheep") && bMTouch.buildKind == buildeMouseAndTouch.BuildKind.Feed)
+         {
+             Sheep sheep = collision.gameObject.GetComponent<Sheep>();
+             if (gameManager.pempkinCount > 0)
+             {
+                 Debug.Log("pempkinCount--");
+                 cuserKind[3] = true;
+                 gameManager.pempkinCount--;
+                 sheep.hungerGauge.fillAmount += 0.4f;
+                 if (castle1 != null)
+                 {
+                     if (castle1.playerenum == Castle1.Players.player1)
+                     {
+                         Multimanager.attackCoins += 25;
+                     }
+                 }
+                 if (castle2 != null)
+                 {
+                     if (castle2.playerenum == Castle2.Players.player2)
+                     {
+                         Multimanager1.attackCoins += 25;
+                     }
+                 }
+             }
+             bMTouch.buildKind = buildeMouseAndTouch.BuildKind.Null;
+         }
+         //도축
+         if (collision.gameObject.CompareTag("Sheep") && bMTouch.buildKind == buildeMouseAndTouch.BuildKind.Slaughter)
+         {
+             Sheep sheep = collision.gameObject.GetComponent<Sheep>();
+             if (sheep.sheepOld)
+             {
+                 GameObject insFood = Instantiate(sheepslaughterGameObject, transform.position, Quaternion.identity);
+                 if (castle1 != null)
+                 {
+                     if (castle1.playerenum == Castle1.Players.player1)
+                     {
+                         Multimanager.attackCoins += 25;
+                     }
+                 }
+                 if (castle2 != null)
+                 {
+                     if (castle2.playerenum == Castle2.Players.player2)
+                     {
+                         Multimanager1.attackCoins += 25;
+                     }
+                 }
+                 Destroy(collision.gameObject);
+                 cuserKind[4] = true;
+                 bMTouch.buildKind = buildeMouseAndTouch.BuildKind.Null;
+             }
+         }
+     }
+ }
 }
